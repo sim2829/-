@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@300&display=swap" rel="stylesheet">
+    <title>Document</title>
+</head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+    <style>
+      body {
+        padding: 10px 600px 0px 600px;
+      }
+
+        .button1{
+        width: 400px;
+        margin: auto;
+        margin-top: 10px;
+        }
+        .img1{
+          width: 600px;
+          height: 400px;
+          margin: auto;
+          background-image: url('https://lh3.googleusercontent.com/proxy/e79Uo7NqD8vP83U-DVqlK_QZ11IBimaCu1xlL8SSTSGlDQdmS5HWbX2dyD487vO6yJz4SLg82gkZtaVT8Iyin2G7aqmA3mpbszI');
+          background-position: center;
+          background-size: 600px 400px;  
+        }
+        .text1{
+          margin-top: 10px;
+        }
+        * {
+          font-family: 'Gaegu', cursive;
+        }
+    </style>
+    <script>
+      function alert1() {
+        alert('주문이 완료되었습니다.');
+      }
+    </script>
+<body>      
+      <div class="img1">
+      </div>
+      <div class="text1">
+      <span style="font-weight: 1000; font-size: 2.4em;">바나나맛우유</span> &nbsp; &nbsp; &nbsp; <span style="font-size: 1.5em;">가격: 1400원/개</span>
+      </div>
+      <p><span style="font-size: 1.5em;">1974년에 태어난 대한민국을 대표하는 No.1 가공우유, 빙그레 바나나맛우유</span></p>
+      <p><span style="font-weight: 1000; font-size: 2.4em;">주문하기</span></p>
+      <div class="input1">
+      <div class="input-group input-group-lg">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="inputGroup-sizing-default">주문자 성함</span>
+        </div>
+        <input type="text" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-lg">
+      </div>
+      <br>
+      <div class="input-group input-group-lg">
+        <div class="input-group-prepend">
+          <label class="input-group-text" for="inputGroupSelect01">수량</label>
+        </div>
+        <select class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-lg">
+          <option selected>수량을 선택하세요.</option>
+          <option value="1">1개</option>
+          <option value="2">2개</option>
+          <option value="3">3개</option>
+        </select>
+      </div>
+      <br>
+      <div class="input-group input-group-lg">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="inputGroup-sizing-default">주소</span>
+        </div>
+        <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+      </div>
+      <br>
+      <div class="input-group input-group-lg">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="inputGroup-sizing-default">전화번호</span>
+        </div>
+        <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+      </div>
+      </div>
+      <div class="button1">
+      <button onclick="alert1()" type="button" class="btn btn-primary btn-lg btn-block">주문하기</button>
+    </div>
+</body>
+</html>
