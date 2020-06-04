@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@300&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
+    </script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
+    </script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>Document</title>
+
+    <style>
+        body {
+            padding: 10px 600px 0px 600px;
+        }
+
+        .button1 {
+            width: 400px;
+            margin: auto;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        .img1 {
+            width: 600px;
+            height: 400px;
+            margin: auto;
+            background-image: url('https://lh3.googleusercontent.com/proxy/e79Uo7NqD8vP83U-DVqlK_QZ11IBimaCu1xlL8SSTSGlDQdmS5HWbX2dyD487vO6yJz4SLg82gkZtaVT8Iyin2G7aqmA3mpbszI');
+            background-position: center;
+            background-size: 600px 400px;
+        }
+
+        .text1 {
+            margin-top: 10px;
+        }
+
+        * {
+            font-family: 'Gaegu', cursive;
+        }
+
+        .input-group-text {
+            font-weight: 700;
+        }
+        .table {
+            text-align: center;
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+            $('#od-box').html('');
+            $.ajax({
+                    type: "GET",
+                    url: "https://api.manana.kr/exchange/rate.json",
+                    success: function (response) {
+                        let exchange_rate = response[1]["rate"];
+                        $("#exchange-rate").text(exchange_rate);
+                    }
+                })
+            listing();
+        }); 
+
+        function make_order() {
+            let name = $("#name").val();
+            let sel = $("#sel").val();
+            let addr = $("#addr").val();
+            let phone = $("#phone").val();
+            let phone_chk = /(010)-([0-9]{4})-([0-9]{4})$/;
+
+            if (name == "") {
+                alert('이름을 입력하세요.');
+                return false;
+            }
+            if (sel == "수량을 선택하세요.") {
+                alert('수량을 선택하세요.');
+                return false;
+            }
+            if (addr == "") {
+                alert('주소를 입력하세요.');
+                return false;
+            }
+            if (phone_chk.test(phone) == false) {
+                alert('휴대폰번호 입력 형식이 틀립니다. \
+                       010-0000-0000 으로 입력해주세요.');
+                return false;
+            }
+
+
+                $.ajax({
+                type: "POST",
+                url: "/orders",
+                data: { name_give: name, sel_give: sel, addr_give: addr, phone_give: phone },
+                success: function (response) {
+                    if (response['result'] == 'success') {
+                        alert(response['msg']);
+                        window.location.reload();
+                    }
+                }
+            })
+        }
+        function listing() {
+            $.ajax({
+                type: "GET",
+                url: "/orders",
+                data: {},
+                success: function (response) {
+                    if (response['result'] == 'success') {
+                        let orders = response['orders'];
+                        for (let i = 0; i < orders.length; i++) {
+                            make_box( orders[i]['name'], orders[i]['sel'], orders[i]['addr'], orders[i]['phone']);
+                        }
+                    } else {
+                        alert('주문을 받아오지 못했습니다');
+                    }
+                }
+            })
+        }
+
+        function make_box(name,sel,addr,phone){
+            let od_box = `<tr>
+                            <td>`+name+`</td>
+                            <td>`+sel+`</td>
+                            <td>`+addr+`</td>
+                            <td>`+phone+`<td>
+                         </tr>`
+             $("#od-box").append(od_box);           
+        }
+    </script>
+
+</head>
+
+<body>
+    <div class="img1">
+    </div>
+    <div class="text1">
+        <span style="font-weight: 1000; font-size: 2.4em;">바나나맛우유</span> &nbsp; &nbsp; &nbsp; <span
+            style="font-size: 1.5em;">가격: 1400원/개</span>
+    </div>
+    <div id="text2">
+        <span style="font-size: 1.5em;">1974년에 태어난 대한민국을 대표하는 No.1 가공우유, 빙그레 바나나맛우유</span></p>
+    </div>
+    <p style="color:blue; font-size: 1.8em; font-weight: 600;"> 달러-원 환율:<span id="exchange-rate"></span></p>
+    <div class="input1">
+        <div class="input-group input-group-lg">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-default">주문자 성함</span>
+            </div>
+            <input id="name" type="text" class="form-control" aria-label="Large"
+                aria-describedby="inputGroup-sizing-lg">
+        </div>
+        <br>
+        <div class="input-group input-group-lg">
+            <div class="input-group-prepend">
+                <label class="input-group-text" for="inputGroupSelect01">수량</label>
+            </div>
+            <select id="sel" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-lg">
+                <option selected>수량을 선택하세요.</option>
+                <option value="1">1개</option>
+                <option value="2">2개</option>
+                <option value="3">3개</option>
+            </select>
+        </div>
+        <br>
+        <div class="input-group input-group-lg">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-default">주소</span>
+            </div>
+            <input id="addr" type="text" class="form-control" aria-label="Sizing example input"
+                aria-describedby="inputGroup-sizing-default">
+        </div>
+        <br>
+        <div class="input-group input-group-lg">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-default">전화번호</span>
+            </div>
+            <input id="phone" type="text" class="form-control" aria-label="Sizing example input"
+                aria-describedby="inputGroup-sizing-default">
+        </div>
+    </div>
+    <div class="button1">
+        <button onclick="make_order()" type="button" class="btn btn-primary btn-lg btn-block">주문하기</button>
+    </div>
+    <div>
+        <table class="table">
+            <thead class="thead-light" style="font-size: 1.3em;">
+                <tr>
+                    <th scope="col">이름</th>
+                    <th scope="col">수량</th>
+                    <th scope="col">주소</th>
+                    <th scope="col">전화번호</th>
+                </tr>
+            <tbody id="od-box" style="font-size: 1.2em;">
+
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>
